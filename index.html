@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Calculator</title>
+<style>
+  input, button { font-size: 1.5rem; }
+  input { width: 96%; margin: 0.5%; text-align: right; }
+  button {
+    width: 23%;
+    margin: 0.5%;
+    box-sizing: border-box;
+  }
+  #equals {
+    width: 96%;
+  }
+  .Calculator{
+    margin: 0% 20%;
+    width: 50%;
+    border: 1px solid black;
+  }
+</style>
+</head>
+<body>
+ <div class="Calculator">
+
+<input type="text" id="display" value="0" disabled />
+
+<div id="buttons">
+  <button data-digit="7">7</button>
+  <button data-digit="8">8</button>
+  <button data-digit="9">9</button>
+  <button data-op="/">÷</button>
+
+  <button data-digit="4">4</button>
+  <button data-digit="5">5</button>
+  <button data-digit="6">6</button>
+  <button data-op="*">×</button>
+
+  <button data-digit="1">1</button>
+  <button data-digit="2">2</button>
+  <button data-digit="3">3</button>
+  <button data-op="-">−</button>
+
+  <button data-digit="0">0</button>
+  <button data-decimal=".">.</button>
+  <button id="clear">C</button>
+  <button data-op="+">+</button>
+
+  <button id="equals">=</button>
+</div>
+</div>
+<script>
+  const display = document.getElementById('display');
+  let firstNumber = '';
+  let secondNumber = '';
+  let operator = '';
+  let enteringSecond = false;
+
+  function updateDisplay(value) {
+    display.value = value;
+  }
+
+  document.getElementById('buttons').addEventListener('click', e => {
+    const btn = e.target;
+    if (btn.dataset.digit) {
+      if (!enteringSecond) {
+        firstNumber += btn.dataset.digit;
+        updateDisplay(firstNumber);
+      } else {
+        secondNumber += btn.dataset.digit;
+        updateDisplay(secondNumber);
+      }
+    } else if (btn.dataset.decimal) {
+      if (!enteringSecond && !firstNumber.includes('.')) {
+        firstNumber += firstNumber ? '.' : '0.';
+        updateDisplay(firstNumber);
+      } else if (enteringSecond && !secondNumber.includes('.')) {
+        secondNumber += secondNumber ? '.' : '0.';
+        updateDisplay(secondNumber);
+      }
+    } else if (btn.dataset.op) {
+      if (firstNumber === '') return;
+      operator = btn.dataset.op;
+      enteringSecond = true;
+    }
+  });
+
+  document.getElementById('equals').addEventListener('click', () => {
+    if (!firstNumber || !operator || !secondNumber) return;
+    const a = parseFloat(firstNumber);
+    const b = parseFloat(secondNumber);
+    let result = 0;
+    if (operator === '+') result = a + b;
+    else if (operator === '-') result = a - b;
+    else if (operator === '*') result = a * b;
+    else if (operator === '/') result = b === 0 ? 'Error' : a / b;
+    updateDisplay(result.toString());
+    firstNumber = result === 'Error' ? '' : result.toString();
+    secondNumber = '';
+    operator = '';
+    enteringSecond = false;
+  });
+
+  document.getElementById('clear').addEventListener('click', () => {
+    firstNumber = '';
+    secondNumber = '';
+    operator = '';
+    enteringSecond = false;
+    updateDisplay('0');
+  });
+</script>
+
+</body>
+</html>
