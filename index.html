@@ -4,20 +4,30 @@
 <meta charset="UTF-8" />
 <title>Calculator</title>
 <style>
-  input, button { font-size: 1.5rem; }
-  input { width: 96%; margin: 0.5%; text-align: right; }
+  
+  input, button { font-size: 1.5rem; border-radius: 20px;padding: 20px; }
+  input { width: 91%; margin: 0.5%; text-align: right; border: 2px solid black;background-color: whitesmoke;}
   button {
     width: 23%;
-    margin: 0.5%;
-    box-sizing: border-box;
+    margin: 0.7%;
+    margin-top: 20px !important;
+    background-color:snow;
+    border: 2px solid black;
+
   }
   #equals {
-    width: 96%;
+    width: 98%;
   }
   .Calculator{
-    margin: 0% 20%;
-    width: 50%;
-    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: aqua;
+    padding: 20px 40px; 
+    margin-left:300px;
+    margin-right: 300px;
+     box-shadow: 5px 5px 10px black;
+    
   }
 </style>
 </head>
